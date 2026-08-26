@@ -1,0 +1,53 @@
+plugins {
+    id 'java'
+    id 'groovy'      // only for src/test/groovy — production code stays pure Java
+    id 'application'
+}
+
+group = 'com.interview'
+version = '1.0-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+application {
+    mainClass = 'com.interview.starter.App'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.12.2')
+
+    testImplementation 'org.spockframework:spock-core:2.4-M6-groovy-4.0'
+    testImplementation 'org.apache.groovy:groovy:4.0.32'
+
+    // Needed only if you Mock()/Stub() classes (not just interfaces).
+    testImplementation 'net.bytebuddy:byte-buddy:1.17.5'
+    testImplementation 'org.objenesis:objenesis:3.4'
+
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+tasks.withType(GroovyCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+
+    testLogging {
+        events 'passed', 'skipped', 'failed'
+        exceptionFormat = 'full'
+        showStandardStreams = false
+    }
+}

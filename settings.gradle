@@ -1,0 +1,6 @@
+plugins {
+    // Lets Gradle download a matching JDK if the required toolchain is missing locally.
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '1.0.0'
+}
+
+rootProject.name = 'gradle-spock-starter'
